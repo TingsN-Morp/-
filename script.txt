@@ -1,0 +1,42 @@
+window.confirm = function() { return true; };
+
+if (sessionStorage.getItem('needClickClose') === 'true') {
+  setTimeout(function() {
+    var closeBtn = document.querySelector('[title="关闭"]') || 
+                   document.querySelector('.toolbar-item-ge0.toolbar-item');
+    
+    if (closeBtn) {
+      closeBtn.click();
+      console.log('刷新后点击了关闭按钮');
+      sessionStorage.removeItem('needClickClose'); // 清除标记
+    }
+  }, 500); // 等待页面加载完成后点击
+}
+
+var allValue2 = document.querySelectorAll('[value="2"]');
+for (var i = 0; i < allValue2.length; i++) {
+  allValue2[i].checked = true;
+}
+
+var firstValue2 = document.querySelector('[value="2"]');
+if (firstValue2) firstValue2.checked = false;
+
+var value1Unchecked = document.querySelector('[value="1"]:not([checked])');
+if (value1Unchecked) value1Unchecked.checked = true;
+
+sessionStorage.setItem('needClickClose', 'true');
+
+var submitBtn = document.getElementById('submitButton');
+if (submitBtn) submitBtn.click();
+
+setTimeout(function() {
+  if (sessionStorage.getItem('needClickClose') === 'true') {
+    var closeBtn = document.querySelector('[title="关闭"]') || 
+                   document.querySelector('.toolbar-item-ge0.toolbar-item');
+    
+    if (closeBtn) {
+      closeBtn.click();
+      sessionStorage.removeItem('needClickClose');
+    }
+  }
+}, 1500);
